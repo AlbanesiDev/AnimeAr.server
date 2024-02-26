@@ -1,0 +1,25 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [
+          "articles/**/*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "externalReference": [],
+    "dest": "_site",
+    "title": "Doc-as-code documentation",
+    "template": [
+      "default"
+    ],
+    "serve": false
+  }
+}

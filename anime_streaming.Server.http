@@ -1,0 +1,6 @@
+@anime_streaming.Server_HostAddress = http://localhost:5088
+
+GET {{anime_streaming.Server_HostAddress}}/api/
+Accept: application/json
+
+###
