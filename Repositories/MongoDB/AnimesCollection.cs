@@ -33,11 +33,11 @@ namespace anime_streaming.Repositories
         }
 
         //==========================================================================
-        // Get all animes from all collections
+        // Get all data from all collections
         /// <inheritdoc/>
-        public async Task<List<AnimesModel>> GetAllAnimesFromAllCollections()
+        public async Task<List<object>> GetAllAnimesFromAllCollections()
         {
-            var allAnimes = new List<AnimesModel>();
+            var allAnimes = new List<object>();
 
             foreach (var collectionName in _repository.CollectionNames)
             {
@@ -48,12 +48,12 @@ namespace anime_streaming.Repositories
         }
 
         //==========================================================================
-        // Get all animes in a collection
+        // Get all data in a collection
         /// <inheritdoc/>
-        public async Task<List<AnimesModel>> GetAllAnimesByCollectionName(string collectionName)
+        public async Task<List<object>> GetAllAnimesByCollectionName(string collectionName)
         {
-            var collection = _repository.db.GetCollection<AnimesModel>(collectionName);
-            var filter = Builders<AnimesModel>.Filter.Empty;
+            var collection = _repository.db.GetCollection<object>(collectionName);
+            var filter = Builders<object>.Filter.Empty;
             return await collection.Find(filter).ToListAsync();
         }
 

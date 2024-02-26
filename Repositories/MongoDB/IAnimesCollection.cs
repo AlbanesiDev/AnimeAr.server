@@ -19,17 +19,17 @@ namespace anime_streaming.Repositories
         Task<List<string>> GetCollectionNames();
 
         /// <summary>
-        /// Gets all animes from all collections.
+        /// Gets all data from all collections.
         /// </summary>
-        /// <returns>A list of animes from all collections.</returns>
-        Task<List<AnimesModel>> GetAllAnimesFromAllCollections();
+        /// <returns>A list of data from all collections.</returns>
+        Task<List<object>> GetAllAnimesFromAllCollections();
 
         /// <summary>
         /// Gets all animes in a specific collection.
         /// </summary>
         /// <param name="collectionName">The name of the collection.</param>
         /// <returns>A list of animes in the specified collection.</returns>
-        Task<List<AnimesModel>> GetAllAnimesByCollectionName(string collectionName);
+        Task<List<object>> GetAllAnimesByCollectionName(string collectionName);
 
         /// <summary>
         /// Get the anime that match the front-end searchbar query.
