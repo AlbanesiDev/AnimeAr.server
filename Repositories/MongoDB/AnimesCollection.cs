@@ -103,5 +103,30 @@ namespace anime_streaming.Repositories
             var filter = Builders<AnimesModel>.Filter.Eq(s => s.Id, new ObjectId(id));
             await collection.DeleteOneAsync(filter);
         }
+        //==========================================================================
+        // Get animes according to searchbar
+        public async Task<List<AnimesModel>> GetAnimesBySearchbar(string collectionName, string input)
+        {
+            var collection = _repository.db.GetCollection<AnimesModel>(collectionName);
+
+            // Dividir la cadena de búsqueda en palabras
+            var words = input.Split(' ');
+
+            // Construir un filtro que coincida con todas las palabras
+            var filterDefinition = Builders<AnimesModel>.Filter.Empty;
+            foreach (var word in words)
+            {
+                // Crear un filtro para cada palabra y combinarlos con un operador AND
+                filterDefinition &= Builders<AnimesModel>.Filter.Regex(s => s.title, new BsonRegularExpression($".*{word}.*", "i"));
+            }
+
+            // Ordenar los resultados para que las coincidencias exactas aparezcan primero
+            var sortDefinition = Builders<AnimesModel>.Sort.Descending(s => s.title);
+
+            // Ejecutar la consulta y ordenar los resultados
+            var result = await collection.Find(filterDefinition).Sort(sortDefinition).ToListAsync();
+
+            return result;
+        }
     }
 }

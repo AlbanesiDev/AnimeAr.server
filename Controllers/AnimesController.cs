@@ -65,6 +65,27 @@ namespace anime_streaming.Controllers.Animes
             }
         }
 
+        [HttpGet("{collectionName}/search")]
+        public async Task<IActionResult> GetAnimesBySearchbar(string collectionName, [FromQuery] string searchbar)
+        {
+            try
+            {
+                var result = await db.GetAnimesBySearchbar(collectionName, searchbar);
+
+                if (result == null)
+                {
+                    return NotFound($"Animes with name {searchbar} not found");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error 500: Internal server error {ex.Message}");
+            }
+        }
+
+
         [HttpGet("{collectionName}/{title}")]
         public async Task<IActionResult> GetAnimesByCollectionAndTitle(string collectionName, string title)
         {

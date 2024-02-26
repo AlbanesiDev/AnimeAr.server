@@ -32,6 +32,15 @@ namespace anime_streaming.Repositories
         Task<List<AnimesModel>> GetAllAnimesByCollectionName(string collectionName);
 
         /// <summary>
+        /// Get the anime that match the front-end searchbar query.
+        /// </summary>
+        /// <param name="collectionName">The name of the collection.</param>
+        /// <param name="input">The name of the anime</param>
+        /// <returns>A list of animes in the specified query.</returns>
+        Task<List<AnimesModel>> GetAnimesBySearchbar(string collectionName,string input);
+
+
+        /// <summary>
         /// Gets a anime by collection name and title anime.
         /// </summary>
         /// <param name="collectionName">The name of the collection.</param>
