@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -61,18 +60,19 @@ namespace anime_streaming.Repositories
         //==========================================================================
         // Get animes according to collection and title
         /// <inheritdoc/>
-
         public async Task<AnimesModel> GetAnimesByCollectionAndTitle(string collectionName, string title)
         {
             var collection = _repository.db.GetCollection<AnimesModel>(collectionName);
 
-            // Crear una expresión regular para buscar cada palabra en el título
-            var regexPattern = new BsonRegularExpression(new Regex(string.Join("|", title.Split(' ')), RegexOptions.IgnoreCase));
+            var words = title.Split(' ');
 
-            // Crear un filtro que coincida con el patrón de expresión regular en el campo 'title'
-            var filter = Builders<AnimesModel>.Filter.Regex(s => s.title, regexPattern);
+            var filterDefinition = Builders<AnimesModel>.Filter.Empty;
+            foreach (var word in words)
+            {
+                filterDefinition &= Builders<AnimesModel>.Filter.Regex(s => s.title, new BsonRegularExpression($".*{word}.*", "i"));
+            }
 
-            return await collection.Find(filter).FirstOrDefaultAsync();
+            return await collection.Find(filterDefinition).FirstOrDefaultAsync();
         }
 
         //==========================================================================
